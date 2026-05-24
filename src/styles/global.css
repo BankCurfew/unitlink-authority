@@ -443,14 +443,15 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-navy);
 }
 
-/* Article infographic — full-width branded images */
+/* Article infographic — no frame, image has its own branded frame */
 .article-infographic {
   width: 100%;
   max-width: 800px;
   margin: 2rem auto;
   display: block;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
 }
 
 /* ==============================================
