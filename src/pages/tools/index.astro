@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="เครื่องมือ"
+  description="เครื่องมือคำนวณและวิเคราะห์ Unit Link — ช่วยให้ตัดสินใจได้ดีขึ้น"
+  keywords={['เครื่องมือ unitlink', 'calculator unitlink', 'คำนวณค่าธรรมเนียม']}
+>
+  <section class="mx-auto max-w-[800px] px-5 py-12">
+    <h1 class="mb-2 font-heading text-3xl font-bold text-navy">เครื่องมือ</h1>
+    <p class="mb-10 text-warm-gray">เครื่องมือช่วยวิเคราะห์และเปรียบเทียบ Unit Link</p>
+
+    <div class="grid gap-6">
+      <a href="/tools/fee-calculator" class="group rounded-xl border border-gray-border p-6 shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover">
+        <span class="badge-strategy mb-3">TOOL</span>
+        <h2 class="mb-2 font-heading text-xl font-semibold text-charcoal group-hover:text-navy">
+          คำนวณค่าธรรมเนียม Unit Link
+        </h2>
+        <p class="text-sm text-warm-gray">
+          ใส่เบี้ย อายุ ทุนประกัน — เห็นค่าธรรมเนียมทุกรายการแบบปีต่อปี รวม COI, Front-end Fee, Admin Fee, Fund Management Fee
+        </p>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

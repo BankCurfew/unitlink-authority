@@ -1,0 +1,304 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Unit Link Fee Calculator',
+  description: 'คำนวณค่าธรรมเนียม Unit Link แบบปีต่อปี — เห็นภาพชัดก่อนตัดสินใจ',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Web Browser',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'THB' },
+  author: { '@type': 'Person', name: 'Bank วุฒิพิพัฒน์' },
+};
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'หน้าแรก', item: new URL('/', Astro.site).toString() },
+    { '@type': 'ListItem', position: 2, name: 'เครื่องมือ', item: new URL('/tools', Astro.site).toString() },
+    { '@type': 'ListItem', position: 3, name: 'คำนวณค่าธรรมเนียม' },
+  ],
+};
+---
+
+<BaseLayout
+  title="คำนวณค่าธรรมเนียม Unit Link — Fee Calculator"
+  description="เครื่องมือคำนวณค่าธรรมเนียม Unit Link แบบปีต่อปี — ใส่เบี้ย อายุ ทุนประกัน เห็นค่าใช้จ่ายทุกรายการ"
+  keywords={['คำนวณค่าธรรมเนียม unitlink', 'unit link fee calculator', 'ค่าธรรมเนียม ยูนิตลิงค์', 'COI unitlink']}
+  jsonLd={jsonLd}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  </Fragment>
+
+  <section class="mx-auto max-w-[1000px] px-5 py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-6 text-sm text-warm-gray" aria-label="Breadcrumb">
+      <ol class="flex items-center gap-1">
+        <li><a href="/" class="hover:text-navy">หน้าแรก</a></li>
+        <li>/</li>
+        <li><a href="/tools/fee-calculator" class="hover:text-navy">เครื่องมือ</a></li>
+        <li>/</li>
+        <li class="text-charcoal">คำนวณค่าธรรมเนียม</li>
+      </ol>
+    </nav>
+
+    <h1 class="mb-2 font-heading text-3xl font-bold text-navy md:text-4xl">คำนวณค่าธรรมเนียม Unit Link</h1>
+    <p class="mb-8 text-warm-gray">ใส่ข้อมูลของคุณ — เห็นค่าธรรมเนียมทุกรายการแบบปีต่อปี</p>
+
+    <!-- Calculator Form -->
+    <div class="grid gap-8 lg:grid-cols-[380px_1fr]">
+      <div class="rounded-xl border border-gray-border bg-white p-6 shadow-card">
+        <h2 class="mb-4 text-lg font-semibold text-navy">ข้อมูลกรมธรรม์</h2>
+
+        <div class="space-y-4">
+          <div>
+            <label for="age" class="mb-1 block text-sm font-medium text-charcoal">อายุ (ปี)</label>
+            <input
+              type="number"
+              id="age"
+              min="1"
+              max="70"
+              value="35"
+              class="w-full rounded-lg border border-gray-border px-4 py-2.5 text-charcoal focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30"
+            />
+          </div>
+
+          <div>
+            <label for="premium" class="mb-1 block text-sm font-medium text-charcoal">เบี้ยประกันรายปี (บาท)</label>
+            <input
+              type="number"
+              id="premium"
+              min="10000"
+              step="1000"
+              value="100000"
+              class="w-full rounded-lg border border-gray-border px-4 py-2.5 text-charcoal focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30"
+            />
+          </div>
+
+          <div>
+            <label for="coverage" class="mb-1 block text-sm font-medium text-charcoal">ทุนประกัน (บาท)</label>
+            <input
+              type="number"
+              id="coverage"
+              min="100000"
+              step="100000"
+              value="1000000"
+              class="w-full rounded-lg border border-gray-border px-4 py-2.5 text-charcoal focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30"
+            />
+          </div>
+
+          <div>
+            <label for="years" class="mb-1 block text-sm font-medium text-charcoal">ระยะเวลา (ปี)</label>
+            <input
+              type="number"
+              id="years"
+              min="5"
+              max="40"
+              value="20"
+              class="w-full rounded-lg border border-gray-border px-4 py-2.5 text-charcoal focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30"
+            />
+          </div>
+
+          <div>
+            <label for="fund-return" class="mb-1 block text-sm font-medium text-charcoal">ผลตอบแทนกองทุนสมมติ (%/ปี)</label>
+            <input
+              type="number"
+              id="fund-return"
+              min="-10"
+              max="20"
+              step="0.5"
+              value="5"
+              class="w-full rounded-lg border border-gray-border px-4 py-2.5 text-charcoal focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30"
+            />
+          </div>
+
+          <button
+            id="calc-btn"
+            class="w-full rounded-lg bg-gold px-6 py-3 font-semibold text-navy transition hover:bg-gold-dark"
+          >
+            คำนวณ
+          </button>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div id="results" class="hidden">
+        <!-- Summary Cards -->
+        <div class="mb-6 grid gap-4 sm:grid-cols-3">
+          <div class="rounded-xl bg-navy p-4 text-center">
+            <p class="font-data text-2xl font-medium text-gold" id="total-fees">-</p>
+            <p class="mt-1 text-xs text-white/70">ค่าธรรมเนียมรวม</p>
+          </div>
+          <div class="rounded-xl bg-navy p-4 text-center">
+            <p class="font-data text-2xl font-medium text-gold" id="total-invested">-</p>
+            <p class="mt-1 text-xs text-white/70">เงินลงทุนจริง</p>
+          </div>
+          <div class="rounded-xl bg-navy p-4 text-center">
+            <p class="font-data text-2xl font-medium text-gold" id="fee-ratio">-</p>
+            <p class="mt-1 text-xs text-white/70">สัดส่วนค่าธรรมเนียม</p>
+          </div>
+        </div>
+
+        <!-- Year-by-Year Table -->
+        <div class="overflow-x-auto rounded-xl border border-gray-border">
+          <table class="w-full text-sm">
+            <thead class="bg-navy text-left text-xs text-white">
+              <tr>
+                <th class="px-3 py-3">ปี</th>
+                <th class="px-3 py-3">อายุ</th>
+                <th class="px-3 py-3 text-right">เบี้ย</th>
+                <th class="px-3 py-3 text-right">Front-end</th>
+                <th class="px-3 py-3 text-right">COI</th>
+                <th class="px-3 py-3 text-right">Admin</th>
+                <th class="px-3 py-3 text-right">ค่าธรรมเนียมรวม</th>
+                <th class="px-3 py-3 text-right">เข้าลงทุน</th>
+                <th class="px-3 py-3 text-right">มูลค่ากรมธรรม์</th>
+              </tr>
+            </thead>
+            <tbody id="fee-table-body" class="text-charcoal">
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="mt-6 rounded-lg bg-cream p-4 text-xs text-warm-gray">
+          <p class="font-semibold text-charcoal">ข้อจำกัดความรับผิดชอบ</p>
+          <p class="mt-1">
+            การคำนวณนี้เป็นการประมาณการเพื่อการศึกษาเท่านั้น ค่าธรรมเนียมจริงอาจแตกต่างตามแบบประกันและเงื่อนไขของบริษัท
+            ผลตอบแทนจากการลงทุนไม่สามารถรับประกันได้ กรุณาศึกษาเอกสารประกอบการขายก่อนตัดสินใจ
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Unit Link Fee Calculator Engine
+    // COI rates per 1,000 THB of coverage (simplified Thai mortality table)
+    const coiRates: Record<number, number> = {};
+    // Simplified COI rates: increases with age
+    for (let age = 1; age <= 100; age++) {
+      if (age <= 30) coiRates[age] = 1.2 + (age - 20) * 0.05;
+      else if (age <= 40) coiRates[age] = 1.7 + (age - 30) * 0.15;
+      else if (age <= 50) coiRates[age] = 3.2 + (age - 40) * 0.35;
+      else if (age <= 60) coiRates[age] = 6.7 + (age - 50) * 0.8;
+      else coiRates[age] = 14.7 + (age - 60) * 2.0;
+    }
+
+    // Front-end fee schedule (% of premium by policy year)
+    const frontEndRates = [
+      0.50, // Year 1: 50%
+      0.25, // Year 2: 25%
+      0.05, // Year 3: 5%
+      0.05, // Year 4: 5%
+      0.05, // Year 5: 5%
+      // Year 6+: 2%
+    ];
+
+    function getFrontEndRate(year: number): number {
+      if (year <= frontEndRates.length) return frontEndRates[year - 1];
+      return 0.02;
+    }
+
+    // Admin fee: 80 baht/month = 960/year
+    const adminFeeMonthly = 80;
+    const adminFeeAnnual = adminFeeMonthly * 12;
+
+    // Fund management fee: 1.5% of AUM per year (deducted from fund value)
+    const fundMgmtFeeRate = 0.015;
+
+    function formatNumber(n: number): string {
+      return n.toLocaleString('th-TH', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+
+    function calculate() {
+      const age = parseInt((document.getElementById('age') as HTMLInputElement).value) || 35;
+      const premium = parseInt((document.getElementById('premium') as HTMLInputElement).value) || 100000;
+      const coverage = parseInt((document.getElementById('coverage') as HTMLInputElement).value) || 1000000;
+      const years = parseInt((document.getElementById('years') as HTMLInputElement).value) || 20;
+      const fundReturn = parseFloat((document.getElementById('fund-return') as HTMLInputElement).value) / 100 || 0.05;
+
+      let totalFees = 0;
+      let totalInvested = 0;
+      let accountValue = 0;
+      const rows: string[] = [];
+
+      for (let y = 1; y <= years; y++) {
+        const currentAge = age + y - 1;
+
+        // Front-end fee
+        const frontEnd = Math.round(premium * getFrontEndRate(y));
+
+        // COI (based on current age and coverage)
+        const coiRate = coiRates[Math.min(currentAge, 100)] || 30;
+        const coi = Math.round((coverage / 1000) * coiRate);
+
+        // Admin fee
+        const admin = adminFeeAnnual;
+
+        // Total fees for this year
+        const yearFees = frontEnd + coi + admin;
+        totalFees += yearFees;
+
+        // Amount entering investment
+        const invested = Math.max(0, premium - frontEnd);
+        totalInvested += invested;
+
+        // Account value: previous + invested - COI - admin, then grow by fund return
+        accountValue = accountValue + invested - coi - admin;
+        // Fund management fee deducted from AUM
+        const fundMgmtFee = Math.round(Math.max(0, accountValue) * fundMgmtFeeRate);
+        accountValue -= fundMgmtFee;
+        // Apply fund return
+        accountValue = accountValue * (1 + fundReturn);
+        accountValue = Math.max(0, accountValue);
+
+        totalFees += fundMgmtFee;
+
+        const rowClass = y % 2 === 0 ? 'bg-cream/50' : '';
+        rows.push(`
+          <tr class="${rowClass}">
+            <td class="px-3 py-2 font-medium">${y}</td>
+            <td class="px-3 py-2">${currentAge}</td>
+            <td class="px-3 py-2 text-right font-data text-sm">${formatNumber(premium)}</td>
+            <td class="px-3 py-2 text-right font-data text-sm text-caution">${formatNumber(frontEnd)}</td>
+            <td class="px-3 py-2 text-right font-data text-sm text-caution">${formatNumber(coi)}</td>
+            <td class="px-3 py-2 text-right font-data text-sm text-caution">${formatNumber(admin + fundMgmtFee)}</td>
+            <td class="px-3 py-2 text-right font-data text-sm font-medium text-caution">${formatNumber(yearFees + fundMgmtFee)}</td>
+            <td class="px-3 py-2 text-right font-data text-sm text-success">${formatNumber(invested)}</td>
+            <td class="px-3 py-2 text-right font-data text-sm font-medium">${formatNumber(Math.round(accountValue))}</td>
+          </tr>
+        `);
+      }
+
+      const totalPremium = premium * years;
+      const feeRatio = ((totalFees / totalPremium) * 100).toFixed(1);
+
+      // Update summary
+      (document.getElementById('total-fees') as HTMLElement).textContent = `${formatNumber(totalFees)} บาท`;
+      (document.getElementById('total-invested') as HTMLElement).textContent = `${formatNumber(Math.round(accountValue))} บาท`;
+      (document.getElementById('fee-ratio') as HTMLElement).textContent = `${feeRatio}%`;
+
+      // Update table
+      (document.getElementById('fee-table-body') as HTMLElement).innerHTML = rows.join('');
+
+      // Show results
+      (document.getElementById('results') as HTMLElement).classList.remove('hidden');
+    }
+
+    document.getElementById('calc-btn')?.addEventListener('click', calculate);
+
+    // Also calculate on Enter key
+    document.querySelectorAll('input[type="number"]').forEach((input) => {
+      input.addEventListener('keydown', (e) => {
+        if ((e as KeyboardEvent).key === 'Enter') calculate();
+      });
+    });
+
+    // Auto-calculate on load
+    calculate();
+  </script>
+</BaseLayout>
