@@ -1,4 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap');
+/* LINESeedSansTH — self-hosted, no Google Fonts */
+@font-face {
+  font-family: 'LINESeedSansTH';
+  src: url('/fonts/LINESeedSansTH_W_Rg.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LINESeedSansTH';
+  src: url('/fonts/LINESeedSansTH_W_Bd.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LINESeedSansTH';
+  src: url('/fonts/LINESeedSansTH_W_He.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import "tailwindcss";
 
 @theme {
@@ -14,10 +36,10 @@
   --color-success: #2E7D32;
   --color-caution: #F57C00;
 
-  /* FIX #1: ALL sans-serif — NO Playfair Display */
-  --font-heading: 'Inter', 'Noto Sans Thai', system-ui, sans-serif;
-  --font-body: 'Inter', 'Noto Sans Thai', system-ui, sans-serif;
-  --font-data: 'JetBrains Mono', monospace;
+  /* ONE font family only: LINESeedSansTH */
+  --font-heading: 'LINESeedSansTH', 'Noto Sans Thai', sans-serif;
+  --font-body: 'LINESeedSansTH', 'Noto Sans Thai', sans-serif;
+  --font-data: 'LINESeedSansTH', monospace;
 
   /* Shadows */
   --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
