@@ -1,6 +1,8 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import AuthorContact from '../components/AuthorContact.astro';
+import AuthorSidebar from '../components/AuthorSidebar.astro';
+import { getCollection } from 'astro:content';
 
 interface FaqItem {
   question: string;
@@ -78,6 +80,14 @@ const faqLd = faqs.length > 0 ? {
 } : null;
 
 const dateFormat = new Intl.DateTimeFormat('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
+
+// Related articles — same category, exclude current
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const currentSlug = Astro.url.pathname.replace(/^\/blog\//, '').replace(/\/$/, '');
+const related = allPosts
+  .filter((p) => p.data.category === category && p.id !== currentSlug)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
 ---
 
 <BaseLayout
@@ -93,7 +103,8 @@ const dateFormat = new Intl.DateTimeFormat('th-TH', { year: 'numeric', month: 'l
     {faqLd && <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />}
   </Fragment>
 
-  <article class="mx-auto max-w-[800px] px-5 py-12">
+  <div class="mx-auto flex max-w-[1100px] gap-8 px-5 py-12">
+  <article class="min-w-0 max-w-[800px] flex-1">
     <!-- Breadcrumb -->
     <nav class="mb-6 text-sm text-warm-gray" aria-label="Breadcrumb">
       <ol class="flex items-center gap-1">
@@ -184,11 +195,37 @@ const dateFormat = new Intl.DateTimeFormat('th-TH', { year: 'numeric', month: 'l
       </div>
     )}
 
+    <!-- Related Articles -->
+    {related.length > 0 && (
+      <section class="mt-12 border-t border-gray-border pt-8">
+        <h2 class="mb-6 font-heading text-2xl font-semibold text-navy">บทความที่เกี่ยวข้อง</h2>
+        <div class="grid gap-4 sm:grid-cols-3">
+          {related.map((post) => (
+            <a href={`/blog/${post.id}`} class="group rounded-xl border border-gray-border p-4 shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover">
+              <span class="mb-1 inline-block rounded bg-navy-light/10 px-2 py-0.5 text-[10px] font-medium text-navy-light">
+                {post.data.category}
+              </span>
+              <h3 class="text-sm font-semibold text-charcoal group-hover:text-navy line-clamp-2">
+                {post.data.title}
+              </h3>
+              <time class="mt-2 block text-xs text-warm-gray" datetime={post.data.pubDate.toISOString()}>
+                {dateFormat.format(post.data.pubDate)}
+              </time>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
     <!-- Author Contact CTA -->
     <div class="mt-10">
       <AuthorContact />
     </div>
   </article>
+
+  <!-- Sticky Author Sidebar (desktop) -->
+  <AuthorSidebar />
+  </div>
 
   <!-- Table of Contents Script -->
   <script>

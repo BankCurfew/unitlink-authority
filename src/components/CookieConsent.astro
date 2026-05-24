@@ -1,0 +1,44 @@
+---
+// PDPA Cookie Consent — vanilla JS, localStorage persist
+---
+
+<div id="cookie-consent" class="fixed inset-0 z-[9999] hidden items-end justify-center bg-black/50 p-4 md:items-end">
+  <div class="w-full max-w-[600px] rounded-xl bg-white p-6 shadow-lg md:mb-6">
+    <h3 class="mb-2 text-lg font-semibold text-navy">เราใช้คุกกี้</h3>
+    <p class="mb-4 text-sm leading-relaxed text-charcoal">
+      เว็บไซต์นี้ใช้คุกกี้เพื่อพัฒนาประสบการณ์การใช้งานและวิเคราะห์การเข้าชม
+      โดยการกด "ยอมรับ" คุณยินยอมให้เราใช้คุกกี้ตาม
+      <a href="/privacy" class="text-navy-light underline">นโยบายความเป็นส่วนตัว</a>
+    </p>
+    <div class="flex items-center gap-3">
+      <button id="cookie-accept" class="rounded-lg bg-gold px-5 py-2.5 text-sm font-semibold text-navy transition hover:bg-gold-dark">
+        ยอมรับ
+      </button>
+      <button id="cookie-reject" class="rounded-lg border border-gray-border px-5 py-2.5 text-sm font-medium text-charcoal transition hover:bg-cream">
+        ปฏิเสธ
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const consent = localStorage.getItem('ub-cookie-consent');
+  const modal = document.getElementById('cookie-consent');
+
+  if (!consent && modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  document.getElementById('cookie-accept')?.addEventListener('click', () => {
+    localStorage.setItem('ub-cookie-consent', 'accepted');
+    modal?.classList.add('hidden');
+    modal?.classList.remove('flex');
+  });
+
+  document.getElementById('cookie-reject')?.addEventListener('click', () => {
+    localStorage.setItem('ub-cookie-consent', 'rejected');
+    modal?.classList.add('hidden');
+    modal?.classList.remove('flex');
+  });
+</script>

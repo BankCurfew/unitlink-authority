@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css';
+import CookieConsent from '../components/CookieConsent.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import ScrollProgress from '../components/ScrollProgress.astro';
 
 interface Props {
   title: string;
@@ -131,6 +134,10 @@ const fullTitle = title === 'Home'
       </div>
     </div>
   </footer>
+
+  <ScrollProgress />
+  <StickyMobileCTA />
+  <CookieConsent />
 
   <script>
     const btn = document.getElementById('mobile-menu-btn');

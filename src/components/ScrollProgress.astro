@@ -1,0 +1,19 @@
+---
+// Scroll progress bar — gold, thin, in header area
+---
+
+<div id="scroll-progress" class="fixed top-0 left-0 z-[60] h-[3px] w-0 bg-gold transition-none" style="will-change: width;"></div>
+
+<script>
+  const bar = document.getElementById('scroll-progress');
+
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    if (bar) bar.style.width = `${Math.min(progress, 100)}%`;
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>
