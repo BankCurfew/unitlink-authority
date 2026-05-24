@@ -268,22 +268,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Tables — iAgencyAIA: navy header, clean borders, responsive */
-/* Table scroll wrapper — JS adds .table-scroll-wrapper around tables */
+/* Table scroll wrapper — JS wraps tables in this div */
 .table-scroll-wrapper {
   overflow-x: auto !important;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  margin: 25px 0;
+  margin: 25px -16px; /* bleed into padding for full-width scroll */
+  padding: 0 16px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   border: 1px solid #eee;
 }
 .article-body table {
+  display: table !important; /* override any Tailwind reset */
   width: 100%;
-  min-width: 480px !important; /* prevent column truncation on 350px+ */
+  min-width: 480px !important;
   border-collapse: collapse;
   font-size: 14px;
-  margin: 0; /* wrapper handles margin */
-  border: none; /* wrapper handles border */
+  margin: 0;
+  border: none;
   border-radius: 0;
 }
 .article-body thead th {
