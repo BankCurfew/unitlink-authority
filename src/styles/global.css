@@ -271,29 +271,51 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1em;
 }
 
-/* Nested UL (decision trees / sub-lists) — styled card boxes */
+/* Decision trees + nested lists — flowchart card style */
 .article-body ul ul,
 .article-body ol ul {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 12px;
+  margin-bottom: 16px;
   padding-left: 0;
   list-style: none;
-  border-left: 3px solid var(--color-gold);
-  margin-left: 4px;
+  margin-left: 0;
+  border-left: none;
 }
-.article-body ul ul li,
-.article-body ol ul li {
-  background-color: #f9f9f9;
-  padding: 10px 15px;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  margin-left: 12px;
-  border: 1px solid #eee;
-  font-size: 15px;
+.article-body ul ul > li,
+.article-body ol ul > li {
+  background: linear-gradient(135deg, #f8f7f4, #f3f1ec);
+  padding: 14px 18px !important;
+  border-radius: 12px;
+  margin-bottom: 10px !important;
+  margin-left: 0;
+  border: 1px solid #e8e4dc;
+  border-left: 4px solid var(--color-gold);
+  font-size: 0.95rem;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
-.article-body ul ul li::marker,
-.article-body ol ul li::marker {
+.article-body ul ul > li::before,
+.article-body ol ul > li::before {
+  display: none !important; /* hide gold disc for nested items */
+}
+/* Third level nesting — deeper indent, lighter bg */
+.article-body ul ul ul > li,
+.article-body ol ul ul > li {
+  background: #fff;
+  border-left-color: var(--color-navy-light);
+  margin-left: 16px;
+  font-size: 0.9rem;
+}
+/* Connector line between nested cards */
+.article-body ul ul > li + li::after,
+.article-body ol ul > li + li::after {
   content: '';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  width: 2px;
+  height: 10px;
+  background: var(--color-gold);
 }
 
 /* Tables — iAgencyAIA: navy header, clean borders, responsive */
