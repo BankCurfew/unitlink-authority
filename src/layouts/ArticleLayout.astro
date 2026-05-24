@@ -308,5 +308,14 @@ const related = allPosts
     }
 
     buildSectionNav();
+
+    // Wrap tables in scroll containers for mobile
+    document.querySelectorAll('.article-body table').forEach((table) => {
+      if (table.parentElement?.classList.contains('table-scroll-wrapper')) return;
+      const wrapper = document.createElement('div');
+      wrapper.className = 'table-scroll-wrapper';
+      table.parentNode?.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+    });
   </script>
 </BaseLayout>
