@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://unitlink-authority.pages.dev',
+  site: 'https://unitlink.vuttipipat.com',
   vite: {
     plugins: [tailwindcss()]
   },
