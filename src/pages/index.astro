@@ -83,24 +83,20 @@ const dateFormat = new Intl.DateTimeFormat('th-TH', { year: 'numeric', month: 's
     </div>
   </section>
 
-  <!-- Stats Counter -->
+  <!-- Stats Counter — verifiable data only -->
   <section class="bg-navy px-5 py-14">
-    <div class="mx-auto grid max-w-[900px] grid-cols-2 gap-8 text-center md:grid-cols-4">
+    <div class="mx-auto grid max-w-[900px] grid-cols-2 gap-8 text-center md:grid-cols-3">
       <div class="reveal">
-        <p class="font-data text-3xl font-medium text-gold md:text-4xl" data-counter="10">0</p>
-        <p class="mt-1 text-sm text-white/60">ปีประสบการณ์+</p>
+        <p class="font-data text-3xl font-medium text-gold md:text-4xl" data-counter={products.length}>0</p>
+        <p class="mt-1 text-sm text-white/60">ผลิตภัณฑ์ที่วิเคราะห์</p>
       </div>
       <div class="reveal">
-        <p class="font-data text-3xl font-medium text-gold md:text-4xl" data-counter="500">0</p>
-        <p class="mt-1 text-sm text-white/60">ลูกค้าที่ไว้วางใจ+</p>
+        <p class="font-data text-3xl font-medium text-gold md:text-4xl" data-counter={posts.length}>0</p>
+        <p class="mt-1 text-sm text-white/60">บทความความรู้</p>
       </div>
       <div class="reveal">
-        <p class="font-data text-3xl font-medium text-gold md:text-4xl" data-counter="1">0</p>
-        <p class="mt-1 text-sm text-white/60">MDRT Member</p>
-      </div>
-      <div class="reveal">
-        <p class="font-data text-3xl font-medium text-gold md:text-4xl" data-counter="25">0</p>
-        <p class="mt-1 text-sm text-white/60">บทความความรู้+</p>
+        <p class="font-data text-3xl font-medium text-gold md:text-4xl" data-counter="4">0</p>
+        <p class="mt-1 text-sm text-white/60">ประเภทค่าธรรมเนียมที่เปรียบเทียบ</p>
       </div>
     </div>
   </section>
