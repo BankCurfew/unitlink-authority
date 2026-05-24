@@ -1,0 +1,106 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  shortName: string;
+  productCode?: string;
+  category?: string;
+  heroImage?: string;
+  features?: string[];
+  keywords?: string[];
+}
+
+const {
+  title,
+  description,
+  shortName,
+  productCode,
+  category,
+  heroImage,
+  features = [],
+  keywords = [],
+} = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: title,
+  description,
+  brand: { '@type': 'Brand', name: 'AIA' },
+  ...(heroImage && { image: new URL(heroImage, Astro.site).toString() }),
+};
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'หน้าแรก', item: new URL('/', Astro.site).toString() },
+    { '@type': 'ListItem', position: 2, name: 'ผลิตภัณฑ์', item: new URL('/products', Astro.site).toString() },
+    { '@type': 'ListItem', position: 3, name: shortName },
+  ],
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  ogImage={heroImage}
+  jsonLd={jsonLd}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  </Fragment>
+
+  <div class="mx-auto max-w-4xl px-4 py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-6 text-sm text-gray-500" aria-label="Breadcrumb">
+      <ol class="flex items-center gap-1">
+        <li><a href="/" class="hover:text-blue-600">หน้าแรก</a></li>
+        <li>/</li>
+        <li><a href="/products" class="hover:text-blue-600">ผลิตภัณฑ์</a></li>
+        <li>/</li>
+        <li class="text-gray-900">{shortName}</li>
+      </ol>
+    </nav>
+
+    {heroImage && (
+      <img
+        src={heroImage}
+        alt={title}
+        class="mb-8 w-full rounded-xl object-cover"
+        loading="eager"
+      />
+    )}
+
+    <header class="mb-8">
+      {category && (
+        <span class="mb-3 inline-block rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
+          {category}
+        </span>
+      )}
+      <h1 class="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">{title}</h1>
+      <p class="text-lg text-gray-600">{description}</p>
+    </header>
+
+    {features.length > 0 && (
+      <div class="mb-10 rounded-xl bg-blue-50 p-6">
+        <h2 class="mb-4 text-lg font-semibold text-blue-900">จุดเด่น</h2>
+        <ul class="grid gap-2 md:grid-cols-2">
+          {features.map((f) => (
+            <li class="flex items-start gap-2 text-sm text-gray-700">
+              <span class="mt-0.5 text-blue-500">&#10003;</span>
+              {f}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <div class="prose prose-lg prose-blue max-w-none">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>

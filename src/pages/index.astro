@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 6);
+
+const products = (await getCollection('products'))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Bank วุฒิพิพัฒน์',
+  jobTitle: 'ที่ปรึกษาการเงินและการประกันภัย',
+  url: new URL('/about', Astro.site).toString(),
+};
+
+const websiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Unitlink by Bank',
+  url: Astro.site?.toString(),
+  description: 'เข้าใจ Unit Link ทุกมิติ — ค่าธรรมเนียม ผลตอบแทน ความคุ้มครอง',
+  author: { '@type': 'Person', name: 'Bank วุฒิพิพัฒน์' },
+};
+
+const dateFormat = new Intl.DateTimeFormat('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<BaseLayout
+  title="Home"
+  description="Unitlink by Bank — เข้าใจ Unit Link ทุกมิติ ค่าธรรมเนียม ผลตอบแทน ความคุ้มครอง โดย Bank วุฒิพิพัฒน์ ที่ปรึกษาการเงิน"
+  keywords={['unitlink', 'unit linked', 'ประกันควบการลงทุน', 'ยูนิตลิงค์', 'Bank วุฒิพิพัฒน์']}
+  jsonLd={websiteLd}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
+  </Fragment>
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-navy to-navy-light px-5 py-20 text-white md:py-28">
+    <div class="mx-auto max-w-[800px] text-center">
+      <h1 class="mb-6 font-heading text-4xl font-bold leading-tight md:text-5xl">
+        เข้าใจ <span class="text-gold">Unit Link</span><br />ทุกมิติ
+      </h1>
+      <p class="mx-auto mb-8 max-w-2xl text-lg text-white/80">
+        ค่าธรรมเนียม ผลตอบแทน ความคุ้มครอง — ครบจบในที่เดียว<br />
+        โดย Bank วุฒิพิพัฒน์ ที่ปรึกษาการเงินและการประกันภัย
+      </p>
+      <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a href="/blog" class="rounded-lg bg-gold px-6 py-3 font-semibold text-navy transition hover:bg-gold-dark">
+          อ่านบทความ
+        </a>
+        <a href="/products" class="rounded-lg border-2 border-white px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-navy">
+          ดูผลิตภัณฑ์
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Unitlink -->
+  <section class="mx-auto max-w-[1200px] px-5 py-16">
+    <h2 class="mb-10 text-center font-heading text-2xl font-semibold text-navy md:text-3xl">ทำไมต้อง Unit Link?</h2>
+    <div class="grid gap-8 md:grid-cols-3">
+      <div class="rounded-xl border border-gray-border p-6 text-center shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover">
+        <div class="mb-4 text-3xl">&#128176;</div>
+        <h3 class="mb-2 text-lg font-semibold text-navy">ลงทุน + ประกัน ในกรมธรรม์เดียว</h3>
+        <p class="text-sm text-warm-gray">รวมความคุ้มครองชีวิตและการลงทุนไว้ด้วยกัน ยืดหยุ่นสูง</p>
+      </div>
+      <div class="rounded-xl border border-gray-border p-6 text-center shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover">
+        <div class="mb-4 text-3xl">&#128200;</div>
+        <h3 class="mb-2 text-lg font-semibold text-navy">เลือกกองทุนได้ตามเป้าหมาย</h3>
+        <p class="text-sm text-warm-gray">สับเปลี่ยนกองทุนได้ตามสภาวะตลาด ปรับพอร์ตได้ตลอด</p>
+      </div>
+      <div class="rounded-xl border border-gray-border p-6 text-center shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover">
+        <div class="mb-4 text-3xl">&#128737;</div>
+        <h3 class="mb-2 text-lg font-semibold text-navy">ลดหย่อนภาษีได้</h3>
+        <p class="text-sm text-warm-gray">เบี้ยประกันชีวิตลดหย่อนภาษีได้สูงสุดตามเกณฑ์สรรพากร</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Articles -->
+  {posts.length > 0 && (
+    <section class="bg-cream px-5 py-16">
+      <div class="mx-auto max-w-[1200px]">
+        <h2 class="mb-10 text-center font-heading text-2xl font-semibold text-navy md:text-3xl">บทความล่าสุด</h2>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <a href={`/blog/${post.id}`} class="group rounded-xl border border-gray-border bg-white p-6 shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover">
+              <span class="mb-2 inline-block rounded bg-navy-light/10 px-2 py-0.5 text-xs font-medium text-navy-light">
+                {post.data.category}
+              </span>
+              <h3 class="mb-2 font-heading text-lg font-semibold text-charcoal group-hover:text-navy">
+                {post.data.title}
+              </h3>
+              <p class="mb-3 text-sm text-warm-gray line-clamp-2">{post.data.description}</p>
+              <time class="text-xs text-warm-gray" datetime={post.data.pubDate.toISOString()}>
+                {dateFormat.format(post.data.pubDate)}
+              </time>
+            </a>
+          ))}
+        </div>
+        <div class="mt-8 text-center">
+          <a href="/blog" class="text-sm font-medium text-navy hover:text-gold-dark">&rarr; ดูบทความทั้งหมด</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Products -->
+  {products.length > 0 && (
+    <section class="mx-auto max-w-[1200px] px-5 py-16">
+      <h2 class="mb-10 text-center font-heading text-2xl font-semibold text-navy md:text-3xl">ผลิตภัณฑ์ Unit Link</h2>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {products.map((product) => (
+          <a href={`/products/${product.id}`} class="group rounded-xl border border-gray-border p-6 shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover">
+            <span class="mb-2 inline-block rounded bg-success/10 px-2 py-0.5 text-xs font-medium text-success">
+              {product.data.category}
+            </span>
+            <h3 class="mb-2 font-heading text-lg font-semibold text-charcoal group-hover:text-navy">
+              {product.data.shortName}
+            </h3>
+            <p class="text-sm text-warm-gray line-clamp-2">{product.data.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="bg-navy px-5 py-16 text-center text-white">
+    <div class="mx-auto max-w-[600px]">
+      <h2 class="mb-4 font-heading text-2xl font-bold md:text-3xl">พร้อมวางแผนการเงินหรือยัง?</h2>
+      <p class="mb-8 text-white/60">ปรึกษาฟรี ไม่มีค่าใช้จ่าย — Bank วุฒิพิพัฒน์ ที่ปรึกษาการเงิน</p>
+      <a href="/about" class="inline-block rounded-lg bg-gold px-8 py-3 font-semibold text-navy transition hover:bg-gold-dark">
+        ติดต่อปรึกษา
+      </a>
+    </div>
+  </section>
+</BaseLayout>

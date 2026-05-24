@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const faqs = [
+  {
+    q: 'Unit Link คืออะไร?',
+    a: 'Unit Link หรือประกันควบการลงทุน คือกรมธรรม์ประกันชีวิตที่รวมการลงทุนในกองทุนรวมไว้ในตัว ผู้ถือกรมธรรม์ได้ทั้งความคุ้มครองชีวิตและโอกาสในการลงทุน',
+  },
+  {
+    q: 'Unit Link ต่างจากประกันชีวิตแบบปกติอย่างไร?',
+    a: 'ประกันชีวิตแบบปกติให้ผลตอบแทนคงที่ตามที่กำหนดไว้ในกรมธรรม์ แต่ Unit Link ผลตอบแทนขึ้นอยู่กับมูลค่ากองทุนที่เลือกลงทุน — มีโอกาสได้มากกว่า แต่ก็มีความเสี่ยงจากการลงทุนด้วย',
+  },
+  {
+    q: 'ค่าธรรมเนียม Unit Link มีอะไรบ้าง?',
+    a: 'ค่าธรรมเนียมหลักๆ ได้แก่ ค่าการประกันภัย (COI), ค่าบริหารกรมธรรม์ (Admin Fee), ค่าดำเนินการรับประกันภัย (Front-end Fee), และค่าบริหารกองทุน (Fund Management Fee) ซึ่งแต่ละแบบจะมีอัตราแตกต่างกัน',
+  },
+  {
+    q: 'Unit Link เหมาะกับใคร?',
+    a: 'เหมาะกับผู้ที่ต้องการความคุ้มครองชีวิตควบคู่กับการลงทุน มีระยะเวลาถือครองระยะยาว (10 ปีขึ้นไป) และยอมรับความเสี่ยงจากการลงทุนในกองทุนรวมได้',
+  },
+  {
+    q: 'สามารถเปลี่ยนกองทุนได้หรือไม่?',
+    a: 'ได้ — ผู้ถือกรมธรรม์สามารถสับเปลี่ยนกองทุน (Fund Switching) ได้ตามที่บริษัทกำหนด โดยปกติฟรีปีละหลายครั้ง ช่วยให้ปรับพอร์ตตามสภาวะตลาดได้',
+  },
+  {
+    q: 'Unit Link ลดหย่อนภาษีได้ไหม?',
+    a: 'ส่วนเบี้ยประกันชีวิตของ Unit Link สามารถลดหย่อนภาษีได้สูงสุด 100,000 บาท ตามเกณฑ์กรมสรรพากร ส่วนที่เป็นเงินลงทุนไม่สามารถนำมาลดหย่อนได้',
+  },
+];
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<BaseLayout
+  title="FAQ — คำถามที่พบบ่อยเรื่อง Unit Link"
+  description="รวมคำถามที่พบบ่อยเกี่ยวกับ Unit Link ประกันควบการลงทุน — ตอบทุกข้อสงสัย เข้าใจง่าย"
+  keywords={['unitlink คำถาม', 'unit link FAQ', 'ประกันควบการลงทุน คำถาม']}
+  jsonLd={faqLd}
+>
+  <section class="mx-auto max-w-[800px] px-5 py-12">
+    <h1 class="mb-2 font-heading text-3xl font-bold text-navy">คำถามที่พบบ่อย</h1>
+    <p class="mb-10 text-warm-gray">ตอบทุกข้อสงสัยเรื่อง Unit Link ประกันควบการลงทุน</p>
+
+    <div class="space-y-4">
+      {faqs.map((faq, i) => (
+        <details class="group rounded-xl border border-gray-border p-4 transition open:shadow-card">
+          <summary class="flex cursor-pointer items-center justify-between font-semibold text-navy">
+            <span>{faq.q}</span>
+            <svg class="h-5 w-5 shrink-0 text-warm-gray transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <p class="mt-3 text-charcoal leading-relaxed">{faq.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

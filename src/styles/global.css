@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&family=Playfair+Display:wght@600;700;900&family=JetBrains+Mono:wght@500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-navy: #1B2A4A;
+  --color-navy-light: #2A3F6B;
+  --color-gold: #C5A55A;
+  --color-gold-dark: #A68B3E;
+  --color-charcoal: #2D2D2D;
+  --color-cream: #F5F0E8;
+  --color-warm-gray: #8A8A8A;
+  --color-gray-border: #E8E8E8;
+  --color-success: #2E7D32;
+  --color-caution: #F57C00;
+
+  /* Typography */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', 'Noto Sans Thai', sans-serif;
+  --font-data: 'JetBrains Mono', monospace;
+
+  /* Shadows */
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-card-hover: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* Base */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-charcoal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+h3, h4, h5, h6 {
+  font-family: var(--font-body);
+}
+
+/* Thai text line-height */
+:lang(th) {
+  line-height: 1.8;
+}
+
+/* Prose overrides for article content */
+.prose h1,
+.prose h2 {
+  font-family: var(--font-heading);
+  color: var(--color-navy);
+}
+
+.prose h3,
+.prose h4 {
+  font-family: var(--font-body);
+  color: var(--color-navy);
+}
+
+.prose a {
+  color: var(--color-navy-light);
+  text-decoration-color: var(--color-gold);
+}
+
+.prose a:hover {
+  color: var(--color-gold-dark);
+}
+
+/* Data callout */
+.data-callout {
+  background: var(--color-navy);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.data-callout .number {
+  font-family: var(--font-data);
+  font-size: 3rem;
+  font-weight: 500;
+  color: var(--color-gold);
+}
+
+.data-callout .label {
+  color: white;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+/* Pillar badges */
+.badge-ul { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.badge-fund { background: linear-gradient(135deg, #16a34a, #15803d); }
+.badge-vs { background: linear-gradient(135deg, #8B5CF6, #7C3AED); }
+.badge-strategy { background: linear-gradient(135deg, #d97706, #b45309); }
+.badge-case { background: linear-gradient(135deg, #ec4899, #db2777); }
+.badge-faq { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+
+.badge-ul,
+.badge-fund,
+.badge-vs,
+.badge-strategy,
+.badge-case,
+.badge-faq {
+  display: inline-block;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Focus indicator */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-gold);
+  color: var(--color-navy);
+}

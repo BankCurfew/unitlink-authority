@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Bank วุฒิพิพัฒน์',
+  jobTitle: 'ที่ปรึกษาการเงินและการประกันภัย',
+  description: 'ผู้เชี่ยวชาญด้าน Unit Link และการวางแผนการเงิน',
+  url: new URL('/about', Astro.site).toString(),
+  knowsAbout: ['Unit Link', 'ประกันชีวิต', 'การวางแผนการเงิน', 'กองทุนรวม'],
+};
+---
+
+<BaseLayout
+  title="เกี่ยวกับ Bank วุฒิพิพัฒน์"
+  description="Bank วุฒิพิพัฒน์ — ที่ปรึกษาการเงินและการประกันภัย ผู้เชี่ยวชาญด้าน Unit Link"
+  keywords={['Bank วุฒิพิพัฒน์', 'ที่ปรึกษาการเงิน', 'unitlink expert']}
+  jsonLd={personLd}
+>
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-navy to-navy-light px-5 py-16 text-white">
+    <div class="mx-auto max-w-[800px] text-center">
+      <div class="mx-auto mb-6 h-32 w-32 rounded-full border-[3px] border-gold bg-navy-light"></div>
+      <h1 class="mb-2 font-heading text-3xl font-bold md:text-4xl">Bank วุฒิพิพัฒน์</h1>
+      <p class="text-gold">ที่ปรึกษาการเงินและการประกันภัย</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-[800px] px-5 py-12">
+    <div class="prose prose-lg max-w-none">
+      <h2 class="font-heading text-navy">เกี่ยวกับผม</h2>
+      <p class="text-charcoal leading-relaxed">
+        ผมเชื่อว่าทุกคนควรมีความรู้ทางการเงินที่เพียงพอในการตัดสินใจ โดยเฉพาะเรื่อง Unit Link ที่มีความซับซ้อน
+        — ค่าธรรมเนียม ผลตอบแทน ความคุ้มครอง ทุกอย่างต้องเข้าใจก่อนตัดสินใจ
+      </p>
+      <p class="text-charcoal leading-relaxed">
+        เว็บไซต์นี้สร้างขึ้นเพื่อเป็นแหล่งความรู้ที่ครบถ้วนและเข้าใจง่ายเรื่อง Unit Link
+        ไม่ว่าคุณจะเพิ่งเริ่มศึกษาหรือต้องการเปรียบเทียบผลิตภัณฑ์ — ข้อมูลทั้งหมดอยู่ที่นี่
+      </p>
+
+      <h2 class="font-heading text-navy">แนวทางการทำงาน</h2>
+      <ul class="text-charcoal">
+        <li>ให้ข้อมูลที่ถูกต้อง ครบถ้วน ไม่บิดเบือน</li>
+        <li>วิเคราะห์ทั้งข้อดีและข้อเสียอย่างตรงไปตรงมา</li>
+        <li>วางแผนตามเป้าหมายของลูกค้า ไม่ใช่ตามเป้าหมายของตัวแทน</li>
+        <li>ให้ความรู้ก่อน — ขายทีหลัง</li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-12 rounded-xl bg-cream p-8 text-center">
+      <h3 class="mb-3 font-heading text-xl font-semibold text-navy">ปรึกษาฟรี</h3>
+      <p class="mb-6 text-warm-gray">ไม่มีค่าใช้จ่าย ไม่มีข้อผูกมัด</p>
+      <p class="font-data text-2xl font-medium text-gold">@unitlinkbybank</p>
+    </div>
+  </section>
+</BaseLayout>

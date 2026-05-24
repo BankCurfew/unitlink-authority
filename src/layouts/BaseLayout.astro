@@ -1,0 +1,139 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string[];
+  ogImage?: string;
+  ogType?: string;
+  canonicalURL?: string;
+  jsonLd?: object;
+}
+
+const {
+  title,
+  description,
+  keywords = [],
+  ogImage = '/images/og-default.png',
+  ogType = 'website',
+  canonicalURL = new URL(Astro.url.pathname, Astro.site),
+  jsonLd,
+} = Astro.props;
+
+const fullTitle = title === 'Home'
+  ? 'Unitlink by Bank — ยูนิตลิงค์ ประกันควบการลงทุน'
+  : `${title} | Unitlink by Bank`;
+---
+
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content={Astro.generator} />
+
+  <!-- SEO -->
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+  <link rel="canonical" href={canonicalURL} />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+  <meta property="og:locale" content="th_TH" />
+  <meta property="og:site_name" content="Unitlink by Bank" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Schema.org JSON-LD -->
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+  <slot name="head" />
+</head>
+<body class="min-h-screen bg-white text-gray-900 antialiased">
+  <slot name="header">
+    <header class="sticky top-0 z-50 bg-navy text-white shadow-md">
+      <nav class="mx-auto flex max-w-[1200px] items-center justify-between px-5 py-4">
+        <a href="/" class="font-heading text-2xl font-black text-gold">
+          UB
+        </a>
+        <ul class="hidden items-center gap-6 text-sm font-medium md:flex">
+          <li><a href="/" class="border-b-2 border-transparent transition hover:border-gold hover:text-gold">หน้าแรก</a></li>
+          <li><a href="/blog" class="border-b-2 border-transparent transition hover:border-gold hover:text-gold">บทความ</a></li>
+          <li><a href="/products" class="border-b-2 border-transparent transition hover:border-gold hover:text-gold">ผลิตภัณฑ์</a></li>
+          <li><a href="/faq" class="border-b-2 border-transparent transition hover:border-gold hover:text-gold">FAQ</a></li>
+          <li><a href="/about" class="border-b-2 border-transparent transition hover:border-gold hover:text-gold">เกี่ยวกับ</a></li>
+        </ul>
+        <button id="mobile-menu-btn" class="text-white md:hidden" aria-label="เปิดเมนู">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </nav>
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="hidden bg-navy md:hidden">
+        <ul class="flex flex-col gap-1 px-5 py-4 text-sm font-medium">
+          <li><a href="/" class="block py-2 text-white transition hover:text-gold">หน้าแรก</a></li>
+          <li><a href="/blog" class="block py-2 text-white transition hover:text-gold">บทความ</a></li>
+          <li><a href="/products" class="block py-2 text-white transition hover:text-gold">ผลิตภัณฑ์</a></li>
+          <li><a href="/faq" class="block py-2 text-white transition hover:text-gold">FAQ</a></li>
+          <li><a href="/about" class="block py-2 text-white transition hover:text-gold">เกี่ยวกับ</a></li>
+        </ul>
+      </div>
+    </header>
+  </slot>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="mt-20 bg-navy text-white">
+    <div class="mx-auto max-w-[1200px] px-5 py-12">
+      <div class="grid gap-8 md:grid-cols-3">
+        <div>
+          <span class="mb-3 block font-heading text-2xl font-black text-gold">UB</span>
+          <p class="text-sm text-white/70">
+            เข้าใจ Unit Link ทุกมิติ — ค่าธรรมเนียม ผลตอบแทน ความคุ้มครอง
+          </p>
+        </div>
+        <div>
+          <h4 class="mb-3 font-semibold text-gold">หมวดหมู่</h4>
+          <ul class="space-y-2 text-sm text-white/70">
+            <li><a href="/blog" class="transition hover:text-gold">บทความ</a></li>
+            <li><a href="/products" class="transition hover:text-gold">ผลิตภัณฑ์</a></li>
+            <li><a href="/faq" class="transition hover:text-gold">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="mb-3 font-semibold text-gold">ติดต่อ</h4>
+          <ul class="space-y-2 text-sm text-white/70">
+            <li><a href="/about" class="transition hover:text-gold">เกี่ยวกับ Bank</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-8 border-t border-gold/40 pt-8 text-center text-xs text-white/50">
+        <p>&copy; {new Date().getFullYear()} Bank วุฒิพิพัฒน์ — Unitlink by Bank</p>
+        <p class="mt-1">@unitlinkbybank</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+  </script>
+</body>
+</html>
