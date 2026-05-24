@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&family=Playfair+Display:wght@600;700;900&family=JetBrains+Mono:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -14,9 +14,9 @@
   --color-success: #2E7D32;
   --color-caution: #F57C00;
 
-  /* Typography */
-  --font-heading: 'Playfair Display', Georgia, serif;
-  --font-body: 'Inter', 'Noto Sans Thai', sans-serif;
+  /* FIX #1: ALL sans-serif — NO Playfair Display */
+  --font-heading: 'Inter', 'Noto Sans Thai', system-ui, sans-serif;
+  --font-body: 'Inter', 'Noto Sans Thai', system-ui, sans-serif;
   --font-data: 'JetBrains Mono', monospace;
 
   /* Shadows */
@@ -31,43 +31,31 @@ html {
 
 body {
   font-family: var(--font-body);
-  color: var(--color-charcoal);
+  color: #333333; /* FIX #7: dark text for readability, NOT --color-charcoal */
+  font-size: 16px; /* FIX #1: minimum 16px body */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headings */
+/* ALL headings = sans-serif */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
 }
 
-h3, h4, h5, h6 {
-  font-family: var(--font-body);
-}
-
 /* Thai text line-height */
 :lang(th) {
-  line-height: 1.8;
+  line-height: 1.8; /* FIX #3 */
 }
 
-/* Prose overrides for article content */
-.prose h1,
-.prose h2 {
+/* Legacy prose overrides (blog listing pages etc.) */
+.prose h1, .prose h2, .prose h3, .prose h4 {
   font-family: var(--font-heading);
   color: var(--color-navy);
 }
-
-.prose h3,
-.prose h4 {
-  font-family: var(--font-body);
-  color: var(--color-navy);
-}
-
 .prose a {
   color: var(--color-navy-light);
   text-decoration-color: var(--color-gold);
 }
-
 .prose a:hover {
   color: var(--color-gold-dark);
 }
@@ -79,14 +67,12 @@ h3, h4, h5, h6 {
   padding: 2rem;
   text-align: center;
 }
-
 .data-callout .number {
   font-family: var(--font-data);
   font-size: 3rem;
   font-weight: 500;
   color: var(--color-gold);
 }
-
 .data-callout .label {
   color: white;
   font-size: 0.875rem;
@@ -101,12 +87,7 @@ h3, h4, h5, h6 {
 .badge-case { background: linear-gradient(135deg, #ec4899, #db2777); }
 .badge-faq { background: linear-gradient(135deg, #dc2626, #b91c1c); }
 
-.badge-ul,
-.badge-fund,
-.badge-vs,
-.badge-strategy,
-.badge-case,
-.badge-faq {
+.badge-ul, .badge-fund, .badge-vs, .badge-strategy, .badge-case, .badge-faq {
   display: inline-block;
   color: white;
   font-size: 0.75rem;
@@ -118,28 +99,44 @@ h3, h4, h5, h6 {
 }
 
 /* ==============================================
-   ARTICLE BODY — Rich Visual Styling
+   ARTICLE BODY — Readability-First Visual Styling
+   FIX #1-#7 per แบงค์ P0 rejection
    ============================================== */
 
 .article-body {
-  font-size: 1.125rem;
-  line-height: 1.8;
-  color: var(--color-charcoal);
+  font-family: var(--font-body);
+  font-size: 1rem;       /* 16px base — FIX #1 */
+  line-height: 1.85;     /* FIX #3: generous for Thai */
+  color: #333333;        /* FIX #7: dark on white, WCAG AA */
 }
 
-/* H2 — Numbered section headers with gold circle */
+/* FIX #2: Clear H1/H2/H3/H4 hierarchy */
+
+.article-body h1 {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;    /* 28px */
+  font-weight: 800;
+  color: var(--color-navy);
+  margin-top: 2rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 3px solid var(--color-gold); /* gold underline */
+  line-height: 1.3;
+}
+
 .article-body h2 {
   font-family: var(--font-heading);
-  color: var(--color-navy);
-  font-size: 1.5rem;
+  font-size: 1.375rem;   /* 22px */
   font-weight: 700;
-  margin-top: 2.5rem;
+  color: var(--color-navy);
+  margin-top: 2.5rem;    /* FIX #3: 40px between sections */
   margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid var(--color-cream);
+  padding-left: 1rem;
+  border-left: 4px solid var(--color-gold);
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  line-height: 1.4;
 }
 
 .article-body h2 .section-number {
@@ -149,7 +146,7 @@ h3, h4, h5, h6 {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-gold), var(--color-gold-dark));
+  background: var(--color-gold);
   color: var(--color-navy);
   font-family: var(--font-data);
   font-size: 0.875rem;
@@ -157,16 +154,28 @@ h3, h4, h5, h6 {
   flex-shrink: 0;
 }
 
-/* H3 — Clean sub-headers */
 .article-body h3 {
-  font-family: var(--font-body);
-  color: var(--color-navy);
-  font-size: 1.2rem;
+  font-family: var(--font-heading);
+  font-size: 1.125rem;   /* 18px */
   font-weight: 600;
-  margin-top: 1.75rem;
+  color: #444444;         /* dark gray, distinct from H2 navy */
+  margin-top: 2rem;       /* FIX #3: 32px */
   margin-bottom: 0.75rem;
-  padding-left: 0.75rem;
-  border-left: 3px solid var(--color-gold);
+  line-height: 1.4;
+}
+
+.article-body h4 {
+  font-family: var(--font-heading);
+  font-size: 1rem;        /* 16px */
+  font-weight: 600;
+  color: #555555;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Paragraphs — FIX #3: consistent 16px spacing */
+.article-body p {
+  margin-bottom: 1rem;    /* 16px */
 }
 
 /* Links */
@@ -181,11 +190,6 @@ h3, h4, h5, h6 {
   color: var(--color-gold-dark);
 }
 
-/* Paragraphs */
-.article-body p {
-  margin-bottom: 1.25rem;
-}
-
 /* UL — Custom checkmark bullets */
 .article-body ul {
   list-style: none;
@@ -195,13 +199,13 @@ h3, h4, h5, h6 {
 .article-body ul li {
   position: relative;
   padding-left: 1.75rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.625rem; /* 10px between items */
 }
 .article-body ul li::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 0.45em;
+  top: 0.4em;
   width: 1rem;
   height: 1rem;
   background: var(--color-gold);
@@ -209,7 +213,14 @@ h3, h4, h5, h6 {
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/contain no-repeat;
 }
 
-/* OL — Numbered list with gold numbers */
+/* Nested UL — arrow instead of checkmark */
+.article-body ul ul li::before {
+  background: var(--color-navy-light);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'/%3E%3C/svg%3E") center/contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* OL — Numbered list with navy circles */
 .article-body ol {
   list-style: none;
   padding-left: 0;
@@ -219,7 +230,7 @@ h3, h4, h5, h6 {
 .article-body ol li {
   position: relative;
   padding-left: 2.25rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.625rem;
   counter-increment: ol-counter;
 }
 .article-body ol li::before {
@@ -240,48 +251,53 @@ h3, h4, h5, h6 {
   font-weight: 700;
 }
 
-/* Tables — Gold/navy styled */
+/* FIX #5: Tables — navy header, alternating rows, responsive */
 .article-body table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin: 1.5rem 0;
   font-size: 0.875rem;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-gray-border);
 }
 .article-body thead th {
   background: var(--color-navy);
   color: white;
   font-weight: 600;
-  padding: 0.75rem 1rem;
+  padding: 0.875rem 1rem;
   text-align: left;
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
+  white-space: nowrap;
 }
 .article-body tbody td {
-  padding: 0.65rem 1rem;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--color-gray-border);
-  color: var(--color-charcoal);
+  color: #333333;
 }
 .article-body tbody tr:nth-child(even) {
   background: var(--color-cream);
 }
-.article-body tbody tr:hover {
-  background: rgba(197, 165, 90, 0.08);
+.article-body tbody tr:last-child td {
+  border-bottom: none;
 }
-/* Responsive table wrapper */
-.article-body .table-wrapper,
+.article-body tbody tr:hover {
+  background: rgba(197, 165, 90, 0.1);
+}
+/* Responsive table scroll on mobile */
 .article-body table {
   display: block;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-/* Blockquotes — gold left border + cream bg */
+/* FIX #6: Blockquotes — gold border + cream card */
 .article-body blockquote {
   border-left: 4px solid var(--color-gold);
   background: var(--color-cream);
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem;
   margin: 1.5rem 0;
   border-radius: 0 12px 12px 0;
   font-style: normal;
@@ -291,34 +307,51 @@ h3, h4, h5, h6 {
   margin-bottom: 0;
 }
 
-/* Strong text — highlight */
+/* Strong text */
 .article-body strong {
   color: var(--color-navy);
   font-weight: 700;
 }
 
-/* Highlight boxes — paragraphs starting with ** that act as callouts */
+/* FIX #6: Key info highlight cards — paragraphs with bold lead */
 .article-body p:has(strong:first-child) {
-  background: linear-gradient(135deg, rgba(197,165,90,0.08), rgba(27,42,74,0.04));
-  border: 1px solid rgba(197,165,90,0.2);
+  background: var(--color-cream);
+  border: 1px solid rgba(197,165,90,0.25);
   border-radius: 12px;
-  padding: 1rem 1.25rem;
-  margin: 1.25rem 0;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
 }
 
-/* Images — centered, rounded, captioned */
+/* FIX #4: Decision tree / flowchart — nested UL with indented cards */
+.article-body ul ul {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--color-gray-border);
+  margin-left: 0.5rem;
+}
+.article-body ul ul li {
+  background: rgba(245, 240, 232, 0.5);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem 0.5rem 1.75rem;
+  margin-bottom: 0.375rem;
+}
+
+/* Images */
 .article-body img {
   border-radius: 12px;
   margin: 1.5rem auto;
   display: block;
   box-shadow: var(--shadow-card);
+  max-width: 100%;
+  height: auto;
 }
 
-/* HR — subtle gold divider */
+/* HR — subtle divider */
 .article-body hr {
   border: none;
-  height: 2px;
-  background: linear-gradient(to right, transparent, var(--color-gold), transparent);
+  height: 1px;
+  background: var(--color-gray-border);
   margin: 2.5rem 0;
 }
 
@@ -326,7 +359,7 @@ h3, h4, h5, h6 {
 .article-body code {
   font-family: var(--font-data);
   background: var(--color-cream);
-  padding: 0.15em 0.4em;
+  padding: 0.2em 0.4em;
   border-radius: 4px;
   font-size: 0.85em;
   color: var(--color-navy);
