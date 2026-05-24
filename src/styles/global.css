@@ -150,9 +150,6 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 10px;
 }
-@media (max-width: 768px) {
-  .article-body h2 { font-size: 22px; }
-}
 
 .article-body h2 .section-number {
   display: inline-flex;
@@ -176,9 +173,6 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 15px;
   line-height: 1.3;
   color: #000;
-}
-@media (max-width: 768px) {
-  .article-body h3 { font-size: 18px; }
 }
 
 /* H4 — iAgencyAIA: 18px bold */
@@ -223,7 +217,8 @@ h1, h2, h3, h4, h5, h6 {
   list-style: disc;
 }
 .article-body ul li {
-  margin-bottom: 0.75em; /* QA fix: was 15px, need more spacing */
+  font-size: inherit !important;
+  margin-bottom: 0.75em !important; /* QA fix */
   color: #333;
 }
 .article-body ul li::marker {
@@ -238,7 +233,8 @@ h1, h2, h3, h4, h5, h6 {
   list-style: decimal;
 }
 .article-body ol li {
-  margin-bottom: 0.75em; /* QA fix */
+  font-size: inherit !important;
+  margin-bottom: 0.75em !important; /* QA fix */
   color: #333;
 }
 .article-body ol li::marker {
