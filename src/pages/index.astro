@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ProfileSection from '../components/ProfileSection.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
@@ -61,7 +62,7 @@ const dateFormat = new Intl.DateTimeFormat('th-TH', { year: 'numeric', month: 's
   </section>
 
   <!-- Why Unitlink -->
-  <section class="mx-auto max-w-[1200px] px-5 py-16">
+  <section class="reveal mx-auto max-w-[1200px] px-5 py-16">
     <h2 class="mb-10 text-center font-heading text-2xl font-semibold text-navy md:text-3xl">ทำไมต้อง Unit Link?</h2>
     <div class="grid gap-8 md:grid-cols-3">
       <div class="rounded-xl border border-gray-border p-6 text-center shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover">
@@ -78,6 +79,28 @@ const dateFormat = new Intl.DateTimeFormat('th-TH', { year: 'numeric', month: 's
         <div class="mb-4 text-3xl">&#128737;</div>
         <h3 class="mb-2 text-lg font-semibold text-navy">ลดหย่อนภาษีได้</h3>
         <p class="text-sm text-warm-gray">เบี้ยประกันชีวิตลดหย่อนภาษีได้สูงสุดตามเกณฑ์สรรพากร</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Counter -->
+  <section class="bg-navy px-5 py-14">
+    <div class="mx-auto grid max-w-[900px] grid-cols-2 gap-8 text-center md:grid-cols-4">
+      <div class="reveal">
+        <p class="font-data text-3xl font-medium text-gold md:text-4xl" data-counter="10">0</p>
+        <p class="mt-1 text-sm text-white/60">ปีประสบการณ์+</p>
+      </div>
+      <div class="reveal">
+        <p class="font-data text-3xl font-medium text-gold md:text-4xl" data-counter="500">0</p>
+        <p class="mt-1 text-sm text-white/60">ลูกค้าที่ไว้วางใจ+</p>
+      </div>
+      <div class="reveal">
+        <p class="font-data text-3xl font-medium text-gold md:text-4xl" data-counter="1">0</p>
+        <p class="mt-1 text-sm text-white/60">MDRT Member</p>
+      </div>
+      <div class="reveal">
+        <p class="font-data text-3xl font-medium text-gold md:text-4xl" data-counter="25">0</p>
+        <p class="mt-1 text-sm text-white/60">บทความความรู้+</p>
       </div>
     </div>
   </section>
@@ -130,6 +153,9 @@ const dateFormat = new Intl.DateTimeFormat('th-TH', { year: 'numeric', month: 's
     </section>
   )}
 
+  <!-- Profile -->
+  <ProfileSection />
+
   <!-- CTA -->
   <section class="bg-navy px-5 py-16 text-center text-white">
     <div class="mx-auto max-w-[600px]">
@@ -140,4 +166,63 @@ const dateFormat = new Intl.DateTimeFormat('th-TH', { year: 'numeric', month: 's
       </a>
     </div>
   </section>
+
+  <!-- Animations: scroll reveal + counter -->
+  <style>
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Stagger children */
+    .reveal:nth-child(2) { transition-delay: 0.1s; }
+    .reveal:nth-child(3) { transition-delay: 0.2s; }
+    .reveal:nth-child(4) { transition-delay: 0.3s; }
+  </style>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    // Counter animation
+    const counterObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+          const target = parseInt(el.dataset.counter || '0');
+          let current = 0;
+          const increment = Math.max(1, Math.floor(target / 40));
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              current = target;
+              clearInterval(timer);
+            }
+            el.textContent = current.toLocaleString('th-TH');
+          }, 30);
+          counterObserver.unobserve(el);
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    document.querySelectorAll('[data-counter]').forEach((el) => counterObserver.observe(el));
+  </script>
 </BaseLayout>

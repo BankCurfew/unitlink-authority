@@ -1,33 +1,67 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import AuthorContact from '../components/AuthorContact.astro';
 
 const personLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: 'Bank วุฒิพิพัฒน์',
+  name: 'พิสิทธิ์ วุฒิพิพัฒน์',
+  alternateName: 'Bank',
   jobTitle: 'ที่ปรึกษาการเงินและการประกันภัย',
-  description: 'ผู้เชี่ยวชาญด้าน Unit Link และการวางแผนการเงิน',
+  description: 'ผู้เชี่ยวชาญด้าน Unit Link และการวางแผนการเงิน — MDRT Member',
   url: new URL('/about', Astro.site).toString(),
-  knowsAbout: ['Unit Link', 'ประกันชีวิต', 'การวางแผนการเงิน', 'กองทุนรวม'],
+  knowsAbout: ['Unit Link', 'ประกันชีวิต', 'การวางแผนการเงิน', 'กองทุนรวม', 'MDRT'],
+  memberOf: { '@type': 'Organization', name: 'Million Dollar Round Table (MDRT)' },
+  identifier: [
+    { '@type': 'PropertyValue', name: 'Agent Number', value: '711862' },
+    { '@type': 'PropertyValue', name: 'MDRT Number', value: '10411839' },
+    { '@type': 'PropertyValue', name: 'IC Number', value: '138317' },
+  ],
+  sameAs: [
+    'https://facebook.com/unitlinkbybank',
+    'https://instagram.com/unitlinkbybank',
+    'https://youtube.com/@unitlinkbybank',
+    'https://tiktok.com/@unitlinkbybank',
+  ],
 };
 ---
 
 <BaseLayout
-  title="เกี่ยวกับ Bank วุฒิพิพัฒน์"
-  description="Bank วุฒิพิพัฒน์ — ที่ปรึกษาการเงินและการประกันภัย ผู้เชี่ยวชาญด้าน Unit Link"
-  keywords={['Bank วุฒิพิพัฒน์', 'ที่ปรึกษาการเงิน', 'unitlink expert']}
+  title="เกี่ยวกับ พิสิทธิ์ วุฒิพิพัฒน์ (Bank) — MDRT Member"
+  description="พิสิทธิ์ วุฒิพิพัฒน์ (Bank) — ที่ปรึกษาการเงิน MDRT Member ผู้เชี่ยวชาญด้าน Unit Link ประกันควบการลงทุน"
+  keywords={['พิสิทธิ์ วุฒิพิพัฒน์', 'Bank วุฒิพิพัฒน์', 'MDRT', 'ที่ปรึกษาการเงิน', 'unitlink expert']}
   jsonLd={personLd}
 >
   <!-- Hero -->
   <section class="bg-gradient-to-br from-navy to-navy-light px-5 py-16 text-white">
     <div class="mx-auto max-w-[800px] text-center">
-      <div class="mx-auto mb-6 h-32 w-32 rounded-full border-[3px] border-gold bg-navy-light"></div>
-      <h1 class="mb-2 font-heading text-3xl font-bold md:text-4xl">Bank วุฒิพิพัฒน์</h1>
+      <div class="mx-auto mb-6 h-36 w-36 rounded-full border-[3px] border-gold bg-navy-light"></div>
+      <h1 class="mb-2 font-heading text-3xl font-bold md:text-4xl">พิสิทธิ์ วุฒิพิพัฒน์ (Bank)</h1>
       <p class="text-gold">ที่ปรึกษาการเงินและการประกันภัย</p>
+      <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+        <span class="rounded-full bg-gold/20 px-4 py-1.5 text-sm font-semibold text-gold">MDRT Member</span>
+        <span class="rounded-full border border-white/30 px-4 py-1.5 text-sm text-white/80">IC Licensed</span>
+      </div>
     </div>
   </section>
 
   <section class="mx-auto max-w-[800px] px-5 py-12">
+    <!-- Credentials Grid -->
+    <div class="mb-10 grid grid-cols-3 gap-4 rounded-xl bg-cream p-6 text-center">
+      <div>
+        <p class="font-data text-lg font-medium text-navy">711862</p>
+        <p class="text-xs text-warm-gray">Agent No.</p>
+      </div>
+      <div>
+        <p class="font-data text-lg font-medium text-gold-dark">10411839</p>
+        <p class="text-xs text-warm-gray">MDRT No.</p>
+      </div>
+      <div>
+        <p class="font-data text-lg font-medium text-navy">138317</p>
+        <p class="text-xs text-warm-gray">IC No.</p>
+      </div>
+    </div>
+
     <div class="prose prose-lg max-w-none">
       <h2 class="font-heading text-navy">เกี่ยวกับผม</h2>
       <p class="text-charcoal leading-relaxed">
@@ -39,7 +73,13 @@ const personLd = {
         ไม่ว่าคุณจะเพิ่งเริ่มศึกษาหรือต้องการเปรียบเทียบผลิตภัณฑ์ — ข้อมูลทั้งหมดอยู่ที่นี่
       </p>
 
-      <h2 class="font-heading text-navy">แนวทางการทำงาน</h2>
+      <h2 class="font-heading text-navy">MDRT — Million Dollar Round Table</h2>
+      <p class="text-charcoal leading-relaxed">
+        MDRT เป็นองค์กรระดับนานาชาติที่ให้การรับรองที่ปรึกษาการเงินชั้นนำทั่วโลก
+        การได้รับสถานะ MDRT Member หมายถึงการให้บริการที่เป็นเลิศและได้รับความไว้วางใจจากลูกค้า
+      </p>
+
+      <h2 class="font-heading text-navy">แนวทางการ��ำงาน</h2>
       <ul class="text-charcoal">
         <li>ให้ข้อมูลที่ถูกต้อง ครบถ้วน ไม่บิดเบือน</li>
         <li>วิเคราะห์ทั้งข้อดีและข้อเสียอย่างตรงไปตรงมา</li>
@@ -48,11 +88,9 @@ const personLd = {
       </ul>
     </div>
 
-    <!-- CTA -->
-    <div class="mt-12 rounded-xl bg-cream p-8 text-center">
-      <h3 class="mb-3 font-heading text-xl font-semibold text-navy">ปรึกษาฟรี</h3>
-      <p class="mb-6 text-warm-gray">ไม่มีค่าใช้จ่าย ไม่มีข้อผูกมัด</p>
-      <p class="font-data text-2xl font-medium text-gold">@unitlinkbybank</p>
+    <!-- Contact -->
+    <div class="mt-12">
+      <AuthorContact />
     </div>
   </section>
 </BaseLayout>
