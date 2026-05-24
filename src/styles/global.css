@@ -443,6 +443,16 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-navy);
 }
 
+/* Article infographic — full-width branded images */
+.article-infographic {
+  width: 100%;
+  max-width: 800px;
+  margin: 2rem auto;
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
 /* ==============================================
    DECISION FLOW — Brand-only colors (navy/gold/cream/white)
    Clean, spacious, easy to read
