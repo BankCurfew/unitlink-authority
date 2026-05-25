@@ -24,12 +24,14 @@ const dateFormat = new Intl.DateTimeFormat('th-TH', { year: 'numeric', month: 'l
         {posts.map((post) => (
           <a href={`/blog/${post.id}`} class="group flex flex-col overflow-hidden rounded-xl border border-gray-border bg-white shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover sm:flex-row">
             {post.data.heroImage && (
-              <img
-                src={post.data.heroImage}
-                alt={post.data.title}
-                class="aspect-video w-full object-cover object-center sm:aspect-[4/3] sm:w-64 sm:shrink-0"
-                loading="lazy"
-              />
+              <div class="sm:w-80 sm:shrink-0">
+                <img
+                  src={post.data.heroImage}
+                  alt={post.data.title}
+                  class="aspect-video h-full w-full object-cover object-center"
+                  loading="lazy"
+                />
+              </div>
             )}
             <div class="flex flex-1 flex-col justify-center p-5">
               <span class="mb-2 inline-block w-fit rounded-full bg-navy-light/10 px-2.5 py-0.5 text-xs font-medium text-navy-light">
