@@ -155,6 +155,13 @@ h1, h2, h3, h4, h5, h6 {
   margin-left: 20px;
 }
 
+/* Mobile content alignment fix — unitlink-authority#1 */
+@media (max-width: 640px) {
+  .article-body > p, .article-body > blockquote, .article-body > details, .article-body > div:not(.decision-flow) { padding-left: 0; }
+  .article-body > ul, .article-body > ol { padding-left: 20px !important; }
+  .article-body > table, .article-body > .table-scroll-wrapper { margin-left: 0; }
+}
+
 /* #1 + #2 + #9: H2 — numbered gold circle + section divider + clear size */
 .article-body h2 {
   font-weight: bold !important;
