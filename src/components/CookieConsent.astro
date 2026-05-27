@@ -1,44 +1,55 @@
 ---
-// PDPA Cookie Consent — vanilla JS, localStorage persist
+// PDPA Cookie Consent — slim non-blocking bottom bar (not modal overlay)
+// UI UX Pro Max: cookie modal covering content = conversion killer
 ---
 
-<div id="cookie-consent" class="fixed inset-0 z-[9999] hidden items-end justify-center bg-black/50 p-4 md:items-end">
-  <div class="w-full max-w-[600px] rounded-xl bg-white p-6 shadow-lg md:mb-6">
-    <h3 class="mb-2 text-lg font-semibold text-navy">เราใช้คุกกี้</h3>
-    <p class="mb-4 text-sm leading-relaxed text-charcoal">
-      เว็บไซต์นี้ใช้คุกกี้เพื่อพัฒนาประสบการณ์การใช้งานและวิเคราะห์การเข้าชม
-      โดยการกด "ยอมรับ" คุณยินยอมให้เราใช้คุกกี้ตาม
-      <a href="/privacy" class="text-navy-light underline">นโยบายความเป็นส่วนตัว</a>
-    </p>
-    <div class="flex items-center gap-3">
-      <button id="cookie-accept" class="rounded-lg bg-gold px-5 py-2.5 text-sm font-semibold text-navy transition hover:bg-gold-dark">
-        ยอมรับ
-      </button>
-      <button id="cookie-reject" class="rounded-lg border border-gray-border px-5 py-2.5 text-sm font-medium text-charcoal transition hover:bg-cream">
-        ปฏิเสธ
-      </button>
+<div id="cookie-consent" class="fixed bottom-0 left-0 right-0 z-50 hidden translate-y-full transition-transform duration-300">
+  <div class="border-t border-gray-border bg-white px-4 py-3 shadow-lg sm:px-6">
+    <div class="mx-auto flex max-w-5xl flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-xs leading-relaxed text-charcoal sm:text-sm">
+        เว็บไซต์นี้ใช้คุกกี้เพื่อพัฒนาประสบการณ์การใช้งาน
+        <a href="/privacy" class="text-navy-light underline">นโยบายความเป็นส่วนตัว</a>
+      </p>
+      <div class="flex shrink-0 items-center gap-2">
+        <button id="cookie-accept" class="rounded-lg bg-gold px-4 py-2 text-xs font-semibold text-navy transition hover:bg-gold-dark sm:text-sm">
+          ยอมรับ
+        </button>
+        <button id="cookie-reject" class="rounded-lg border border-gray-border px-4 py-2 text-xs font-medium text-warm-gray transition hover:bg-cream sm:text-sm">
+          ปฏิเสธ
+        </button>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
   const consent = localStorage.getItem('ub-cookie-consent');
-  const modal = document.getElementById('cookie-consent');
+  const bar = document.getElementById('cookie-consent');
 
-  if (!consent && modal) {
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
+  if (!consent && bar) {
+    bar.classList.remove('hidden');
+    // Slide up after small delay for smooth entrance
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        bar.classList.remove('translate-y-full');
+      });
+    });
+  }
+
+  function dismissBar() {
+    if (bar) {
+      bar.classList.add('translate-y-full');
+      setTimeout(() => bar.classList.add('hidden'), 300);
+    }
   }
 
   document.getElementById('cookie-accept')?.addEventListener('click', () => {
     localStorage.setItem('ub-cookie-consent', 'accepted');
-    modal?.classList.add('hidden');
-    modal?.classList.remove('flex');
+    dismissBar();
   });
 
   document.getElementById('cookie-reject')?.addEventListener('click', () => {
     localStorage.setItem('ub-cookie-consent', 'rejected');
-    modal?.classList.add('hidden');
-    modal?.classList.remove('flex');
+    dismissBar();
   });
 </script>
