@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import AuthorContact from '../components/AuthorContact.astro';
 
 interface Props {
   title: string;
@@ -54,15 +55,15 @@ const breadcrumbLd = {
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
   </Fragment>
 
-  <div class="mx-auto max-w-4xl px-4 py-12">
-    <!-- Breadcrumb -->
-    <nav class="mb-6 text-sm text-gray-500" aria-label="Breadcrumb">
+  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6">
+    <!-- Breadcrumb — navy brand colors -->
+    <nav class="mb-6 text-sm text-warm-gray" aria-label="Breadcrumb">
       <ol class="flex items-center gap-1">
-        <li><a href="/" class="hover:text-blue-600">หน้าแรก</a></li>
-        <li>/</li>
-        <li><a href="/products" class="hover:text-blue-600">ผลิตภัณฑ์</a></li>
-        <li>/</li>
-        <li class="text-gray-900">{shortName}</li>
+        <li><a href="/" class="hover:text-navy">หน้าแรก</a></li>
+        <li class="text-gray-border">/</li>
+        <li><a href="/products" class="hover:text-navy">ผลิตภัณฑ์</a></li>
+        <li class="text-gray-border">/</li>
+        <li class="font-medium text-navy">{shortName}</li>
       </ol>
     </nav>
 
@@ -70,28 +71,31 @@ const breadcrumbLd = {
       <img
         src={heroImage}
         alt={title}
-        class="mb-8 w-full rounded-xl object-cover"
+        class="mb-8 aspect-video w-full rounded-xl object-cover shadow-card"
         loading="eager"
       />
     )}
 
-    <header class="mb-8">
+    <header class="mb-8 border-b-2 border-gold pb-6">
       {category && (
-        <span class="mb-3 inline-block rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
+        <span class="mb-3 inline-block rounded-full bg-gradient-to-r from-navy to-navy-light px-3 py-1 text-xs font-medium text-white">
           {category}
         </span>
       )}
-      <h1 class="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">{title}</h1>
-      <p class="text-lg text-gray-600">{description}</p>
+      <h1 class="mb-4 font-heading text-3xl font-bold text-navy md:text-4xl">{title}</h1>
+      <p class="text-lg leading-relaxed text-charcoal">{description}</p>
+      {productCode && (
+        <p class="mt-2 text-sm text-warm-gray">รหัสผลิตภัณฑ์: {productCode}</p>
+      )}
     </header>
 
     {features.length > 0 && (
-      <div class="mb-10 rounded-xl bg-blue-50 p-6">
-        <h2 class="mb-4 text-lg font-semibold text-blue-900">จุดเด่น</h2>
-        <ul class="grid gap-2 md:grid-cols-2">
+      <div class="mb-10 rounded-xl border border-gold/30 bg-cream p-6">
+        <h2 class="mb-4 font-heading text-lg font-semibold text-navy">จุดเด่นของผลิตภัณฑ์</h2>
+        <ul class="grid gap-3 md:grid-cols-2">
           {features.map((f) => (
-            <li class="flex items-start gap-2 text-sm text-gray-700">
-              <span class="mt-0.5 text-blue-500">&#10003;</span>
+            <li class="flex items-start gap-2.5 text-sm text-charcoal">
+              <svg class="mt-0.5 h-5 w-5 shrink-0 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
               {f}
             </li>
           ))}
@@ -99,8 +103,28 @@ const breadcrumbLd = {
       </div>
     )}
 
-    <div class="prose prose-lg prose-blue max-w-none">
+    <div class="article-body">
       <slot />
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-12 rounded-xl bg-gradient-to-r from-navy to-navy-light p-8 text-center text-white">
+      <h2 class="mb-3 font-heading text-xl font-bold md:text-2xl">สนใจผลิตภัณฑ์นี้?</h2>
+      <p class="mb-6 text-sm text-white/70">ปรึกษาฟรี ไม่มีค่าใช้จ่าย — ให้คำแนะนำตรงจุด ตอบทุกคำถามเรื่อง Unit Link</p>
+      <a
+        href="https://lin.ee/kJBaIEk"
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2 rounded-lg bg-gold px-6 py-3 font-semibold text-navy transition hover:bg-gold-dark"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+        ปรึกษาผ่าน LINE
+      </a>
+    </div>
+
+    <!-- Author -->
+    <div class="mt-12">
+      <AuthorContact />
     </div>
   </div>
 </BaseLayout>

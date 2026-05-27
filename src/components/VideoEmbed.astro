@@ -1,0 +1,20 @@
+---
+// Video Embed — lazy-loaded YouTube with privacy mode
+// UI UX Pro Max: "Video builds trust faster than text for financial services"
+interface Props {
+  videoId: string;
+  title?: string;
+}
+const { videoId, title = 'วิดีโอ' } = Astro.props;
+---
+
+<div class="aspect-video w-full overflow-hidden rounded-xl shadow-card">
+  <iframe
+    src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+    title={title}
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+    loading="lazy"
+    class="h-full w-full border-0"
+  ></iframe>
+</div>
