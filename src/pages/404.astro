@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="404 — ไม่พบหน้าที่ค้นหา"
+  description="หน้าที่คุณกำลังค้นหาไม่มีอยู่ในระบบ"
+>
+  <div class="mx-auto flex min-h-[60vh] max-w-2xl flex-col items-center justify-center px-5 py-20 text-center">
+    <span class="mb-4 text-8xl font-black text-gold">404</span>
+    <h1 class="mb-4 font-heading text-3xl font-bold text-navy">ไม่พบหน้าที่ค้นหา</h1>
+    <p class="mb-8 text-lg text-warm-gray">
+      หน้าที่คุณกำลังค้นหาอาจถูกย้าย ลบ หรือไม่มีอยู่ในระบบ
+    </p>
+    <div class="flex flex-wrap gap-4">
+      <a
+        href="/"
+        class="rounded-xl bg-navy px-6 py-3 font-semibold text-white transition hover:bg-navy-light"
+      >
+        กลับหน้าแรก
+      </a>
+      <a
+        href="/blog"
+        class="rounded-xl border-2 border-navy px-6 py-3 font-semibold text-navy transition hover:bg-navy hover:text-white"
+      >
+        อ่านบทความ
+      </a>
+      <a
+        href="/products"
+        class="rounded-xl border-2 border-gold px-6 py-3 font-semibold text-navy transition hover:bg-gold"
+      >
+        ดูผลิตภัณฑ์
+      </a>
+    </div>
+  </div>
+</BaseLayout>

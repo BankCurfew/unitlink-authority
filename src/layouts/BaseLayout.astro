@@ -12,16 +12,22 @@ interface Props {
   ogType?: string;
   canonicalURL?: string;
   jsonLd?: object;
+  articleMeta?: {
+    publishedTime?: string;
+    modifiedTime?: string;
+    author?: string;
+  };
 }
 
 const {
   title,
   description,
   keywords = [],
-  ogImage = '/images/og-default.png',
+  ogImage = '/images/unitlink-pillar.webp',
   ogType = 'website',
   canonicalURL = new URL(Astro.url.pathname, Astro.site),
   jsonLd,
+  articleMeta,
 } = Astro.props;
 
 const fullTitle = title === 'Home'
@@ -48,14 +54,23 @@ const fullTitle = title === 'Home'
   <meta property="og:type" content={ogType} />
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={fullTitle} />
   <meta property="og:locale" content="th_TH" />
   <meta property="og:site_name" content="Unitlink by Bank" />
+  {articleMeta?.publishedTime && <meta property="article:published_time" content={articleMeta.publishedTime} />}
+  {articleMeta?.modifiedTime && <meta property="article:modified_time" content={articleMeta.modifiedTime} />}
+  {articleMeta?.author && <meta property="article:author" content={articleMeta.author} />}
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@unitlinkbybank" />
+  <meta name="twitter:creator" content="@unitlinkbybank" />
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />
+  <meta name="twitter:image:alt" content={fullTitle} />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

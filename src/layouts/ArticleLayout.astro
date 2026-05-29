@@ -96,6 +96,11 @@ const related = allPosts
   ogType="article"
   ogImage={heroImage}
   jsonLd={jsonLd}
+  articleMeta={{
+    publishedTime: pubDate.toISOString(),
+    modifiedTime: updatedDate?.toISOString(),
+    author: author,
+  }}
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
